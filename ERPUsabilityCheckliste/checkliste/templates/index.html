@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Deine ERP-Projekte</h1>
+        {% for projekt in projekte %}
+            <ul>
+                <li><a href="{% url 'projekt' projekt.id %}">{{ projekt.name }}</li>
+            </ul>
+        {% endfor %}
+        <a href="{% url 'neues_projekt' %}">Projekt hinzufügen</a>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Auswertung Übersicht</h1>
+
+        {% for categorie in categories %}
+            <ul>
+                <li><a href="{% url 'kategorie_auswertung' projekt.id categorie.id %}">{{ categorie.name }} Auswertung</li></li>
+            </ul>
+        {% endfor %}
+
+        <a href="{% url 'gesamt_auswertung' projekt.id %}">Gesamtauswertung</a>
+       
+
+{% endblock %}

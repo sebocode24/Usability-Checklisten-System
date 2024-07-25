@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Usability Kategorien</h1>
+
+        {% for categorie in categories %}
+            <ul>
+                <li><a href="{% url 'kategorie' projekt.id categorie.id %}">{{ categorie.name }}</li></li>
+            </ul>
+        {% endfor %}
+
+        <a href="{% url 'auswertung' projekt.id %}">Auswertung</a>
+       
+
+{% endblock %}

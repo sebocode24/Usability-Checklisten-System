@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Projekt hinzufügen</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.name.label_tag }} {{ form.name }}
+            </div>
+            <button type="submit">Erstellen</button>
+        </form>
+       
+{% endblock %}

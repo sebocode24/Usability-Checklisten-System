@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Bewertungskriterien: {{ category.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <ul>
+            {% for form in formset.NoSubcategory %}
+                <li>
+                    <div>{{ form.instance.name }}</div>
+                    <div>{{ form.rating }}</div>
+                    <div>{{ form.gewichtung }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% for subcategory, forms in formset.items %}
+                <h2>{{ subcategory.name }}</h2>
+                <ul>
+                    {% for form in forms %}
+                        <li>
+                            <div>{{ form.instance.name }}</div>
+                            <div>{{ form.rating }}</div>
+                            <div>{{ form.gewichtung }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+        {% endfor %}
+        <button type="submit">Speichern</button>
+    </form>
+
+{% endblock %}

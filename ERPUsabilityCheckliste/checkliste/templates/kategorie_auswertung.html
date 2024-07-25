@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Auswertung für Kategorie: {{ category.name }}</h1>
+
+    <div class="chart-container" style="position: relative; height:100vh; width: 120vw; margin: auto;">
+        <canvas id="noSubcategoryChart"></canvas>
+    </div>
+    <script>
+        const noSubcategoryLabels = JSON.parse('{{ labels|escapejs }}');
+        const noSubcategoryData = JSON.parse('{{ no_subcategory_data|escapejs }}');
+
+        const noSubcategoryConfig = {
+            type: 'radar',
+            data: {
+                labels: noSubcategoryLabels,
+                datasets: [{
+                    label: 'Allgemeine Kriterien',
+                    data: noSubcategoryData,
+                    fill: true,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        ticks: {
+                            maxTicksLimit: 5,
+                            showLabelBackdrop: false,
+                            backdropPadding: 3,
+                            callback: function(value) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        borderWidth: 3
+                    }
+                }
+            }
+        };
+
+        new Chart(
+            document.getElementById('noSubcategoryChart'),
+            noSubcategoryConfig
+        );
+    </script>
+
+    {% for subcategory, data in subcategory_data.items %}
+        <h2>Kriterien für {{ subcategory }}</h2>
+        <canvas id="chart_{{ subcategory|slugify }}"></canvas>
+        <script>
+            (function() {
+                const labels = JSON.parse('{{ labels|escapejs }}');
+                const data = JSON.parse('{{ data|escapejs }}');
+                const config = {
+                    type: 'radar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '{{ subcategory }} Kriterien',
+                            data: data,
+                            fill: true,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgb(54, 162, 235)',
+                            pointBackgroundColor: 'rgb(54, 162, 235)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(54, 162, 235)'
+                        }]
+                    },
+                    options: {
+                        elements: {
+                            line: {
+                                borderWidth: 3
+                            }
+                        }
+                    },
+                };
+
+                new Chart(
+                    document.getElementById('chart_{{ subcategory|slugify }}'),
+                    config
+                );
+            })();
+        </script>
+    {% endfor %}
+{% endblock %}
